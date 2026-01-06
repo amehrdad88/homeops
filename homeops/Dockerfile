@@ -1,17 +1,29 @@
-ARG BUILD_FROM
-FROM $BUILD_FROM
+FROM python:3.12-alpine
 
-# Install Python 3 (used for the tiny web server)
-RUN \
-  apk add --no-cache \
-    python3
+# Prevent Python from buffering stdout/stderr
+ENV PYTHONUNBUFFERED=1
 
+# Create app directory
 WORKDIR /app
 
-# Copy add-on runtime
-COPY run.sh /run.sh
-COPY server.py /app/server.py
+# Install system dependencies (minimal, but needed for requests/ssl)
+RUN apk add --no-cache \
+    ca-certificates \
+    gcc \
+    musl-dev \
+    libffi-dev
 
-RUN chmod a+x /run.sh
+# Copy Python dependencies
+COPY requirements.txt .
 
-CMD [ "/run.sh" ]
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY server.py .
+
+# Expose the port Home Assistant ingress expects
+EXPOSE 8000
+
+# Start the app
+CMD ["python", "server.py"]
