@@ -1,24 +1,18 @@
-name: "HomeOps"
-description: "Autopilot for Home Assistant: Doctor (read-only) + Safe Change Engine (coming soon)."
-version: "0.0.1"
-slug: "homeops"
-startup: services
-init: false
-
+name: HomeOps
+slug: homeops
+description: "HomeOps Doctor: read-only Home Assistant reliability dashboard."
+version: "0.5.0"
+url: "https://github.com/amehrdad88/homeops"
 arch:
   - amd64
   - aarch64
   - armv7
-  - armhf
-  - i386
-
 ingress: true
-ingress_port: 8000
-panel_icon: mdi:home-automation
 panel_title: HomeOps
-
+panel_icon: mdi:shield-check
+panel_admin: false
+startup: services
+boot: auto
 homeassistant_api: true
-# hassio_api: true  # enable later when you need Supervisor endpoints
-
 options: {}
 schema: {}

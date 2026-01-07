@@ -1,14 +1,15 @@
-# HomeOps (WIP)
+# HomeOps (Add-on)
 
-HomeOps is an "Autopilot" layer for Home Assistant.
+HomeOps is a local-first operational control plane for Home Assistant. This add-on currently ships a **read-only Doctor** UI that surfaces health signals (availability, updates) and explains impact deterministically (no AI, no autofix).
 
-## v0 goal
-A **read-only** Doctor UI that runs as a Home Assistant add-on using **Ingress**.
+## Dev workflow (recommended)
+1. Edit code locally.
+2. Commit + push to GitHub.
+3. In Home Assistant: Add-on Store → ⋮ → Check for updates → Update/Restart HomeOps.
 
-## Install (dev)
-1. In Home Assistant: Settings → Add-ons → Add-on Store → (⋮) Repositories → add your GitHub repo URL.
-2. Find "HomeOps" in the store, Install, Start.
-3. Open the sidebar item "HomeOps".
-
-## Notes
-- This add-on uses the Home Assistant Core API proxy (`http://supervisor/core/api/`) and the `SUPERVISOR_TOKEN`.
+## Structure
+- `homeops/` — Home Assistant add-on
+  - `app/` — Python application code (Flask)
+  - `templates/` + `static/` — UI assets
+  - `health/` — deterministic analysis engine (v5 foundation)
+- `docs/` — product + engineering specs

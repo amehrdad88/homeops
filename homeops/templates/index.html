@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>HomeOps Doctor</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>HomeOps Doctor</h1>
+      <div class="sub">
+        Home Assistant <span class="mono">{{ data.ha_version }}</span>
+        · <span class="mono">{{ data.entity_count }}</span> entities
+      </div>
+    </div>
+    <div class="meta mono">
+      generated: {{ data.generated_at_iso }}
+    </div>
+  </header>
+
+  <section>
+    <h2>Health Summary</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="label">Overall</div>
+        <div class="value {{ data.severity }}">{{ data.severity|upper }}</div>
+      </div>
+      <div class="card">
+        <div class="label">Unavailable</div>
+        <div class="value">{{ data.unavailable.total_count }}</div>
+      </div>
+      <div class="card">
+        <div class="label">Critical Unavailable</div>
+        <div class="value">{{ data.unavailable.critical_count }}</div>
+      </div>
+      <div class="card">
+        <div class="label">Updates</div>
+        <div class="value">{{ data.updates.count }}</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Top Issues</h2>
+    {% for issue in data.issues %}
+      <div class="issue {{ issue.severity }}">
+        <div class="issue-title">{{ issue.title }}</div>
+        <div class="issue-summary">{{ issue.summary }}</div>
+
+        {% if issue.start_here and issue.severity != "healthy" %}
+          <div class="issue-start-here">
+            <div class="issue-start-here-title">Start here</div>
+            <ol>
+              {% for step in issue.start_here %}
+                <li>{{ step }}</li>
+              {% endfor %}
+            </ol>
+          </div>
+        {% endif %}
+
+        {% if issue.id == "critical_unavailable" and data.unavailable.by_domain %}
+          <div class="issue-details">
+            <div class="issue-details-title">Most affected domains</div>
+            <div class="grid">
+              {% for domain, count in data.unavailable.by_domain.items() %}
+                <div class="row">
+                  <div class="mono">{{ domain }}</div>
+                  <div class="mono">{{ count }}</div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </section>
+
+  <section class="footer">
+    <a class="mono" href="/api/report" target="_blank">View raw report JSON</a>
+  </section>
+</body>
+</html>
