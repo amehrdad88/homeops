@@ -59,6 +59,5 @@ def _dataclass_to_dict(obj):
     return str(obj)
 
 if __name__ == "__main__":
-    port = int(os.environ.get("INGRESS_PORT", "8000"))
     app = create_app()
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=8099)
