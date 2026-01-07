@@ -9,6 +9,7 @@ RUN apk add --no-cache ca-certificates gcc musl-dev libffi-dev
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+COPY . .
 COPY app ./app
 COPY templates ./templates
 COPY static ./static

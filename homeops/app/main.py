@@ -1,7 +1,7 @@
 import os
 from flask import Flask, jsonify, render_template
-from .ha_client import HAClient
-from .health.analyzer import build_report
+from app.ha_client import HAClient
+from app.health.analyzer import build_report
 
 def create_app() -> Flask:
     app = Flask(__name__, template_folder="../templates", static_folder="../static")
