@@ -1,5 +1,6 @@
 import os
 from flask import Flask, jsonify, render_template
+
 from app.ha_client import HAClient
 from app.health.analyzer import build_report
 
