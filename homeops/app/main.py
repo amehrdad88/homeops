@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, render_template
 from .ha_client import HAClient
 from .health.analyzer import build_report
+import os
 
 def create_app() -> Flask:
     app = Flask(__name__, template_folder="../templates", static_folder="../static")
@@ -57,5 +58,6 @@ def _dataclass_to_dict(obj):
     return str(obj)
 
 if __name__ == "__main__":
+    port = int(os.environ.get("INGRESS_PORT", "8000"))
     app = create_app()
-    app.run(host="0.0.0.0", port=8000)
+    app.run(host="0.0.0.0", port=port)
