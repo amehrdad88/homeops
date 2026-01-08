@@ -1,6 +1,6 @@
 name: homeops
-url: https://github.com/yourname/homeops
-maintainer: Your Name <your.email@example.com>
+url: https://github.com/amehrdad88/homeops
+maintainer: Alex M <alex.m@tester.com>
 description: >-
   HomeOps Doctor is an add-on that provides a local-first health and reliability dashboard for Home Assistant. It analyzes your Home Assistant instance to surface the most important operational issues, guides you toward the first troubleshooting steps, and helps you understand the impact of unavailable devices and pending updates.  
   
