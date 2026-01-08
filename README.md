@@ -1,15 +1,8 @@
-# HomeOps (Add-on)
+HomeOps Doctor
+================
 
-HomeOps is a local-first operational control plane for Home Assistant. This add-on currently ships a **read-only Doctor** UI that surfaces health signals (availability, updates) and explains impact deterministically (no AI, no autofix).
+HomeOps Doctor is a Home Assistant add-on that provides a concise, reliable health dashboard for your smart home.  It runs locally alongside Home Assistant, reads the state of your entities and integrations, and surfaces the most important issues you should pay attention to.
 
-## Dev workflow (recommended)
-1. Edit code locally.
-2. Commit + push to GitHub.
-3. In Home Assistant: Add-on Store → ⋮ → Check for updates → Update/Restart HomeOps.
+Unlike typical dashboards that overwhelm you with raw numbers and lists, HomeOps Doctor distills your Home Assistant system into a single headline and a clear next step.  It highlights critical unavailable devices, summarizes which domains are affected, and offers a short list of troubleshooting actions so you know where to start.
 
-## Structure
-- `homeops/` — Home Assistant add-on
-  - `app/` — Python application code (Flask)
-  - `templates/` + `static/` — UI assets
-  - `health/` — deterministic analysis engine (v5 foundation)
-- `docs/` — product + engineering specs
+This project is part of an ongoing exploration into building a “reliability autopilot” for Home Assistant.  Future versions may include deeper analysis, historical context, and (optionally) AI‑assisted explanations.  For now, the focus is on trust, clarity, and doing one thing well.

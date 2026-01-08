@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HomeOps Doctor</title>
+    <!-- Link to the bundled stylesheet.  Using url_for ensures the correct
+         static path is generated when the app is running under Home
+         Assistant's ingress proxy. -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="hero">
+        <h1 class="brand">HomeOps Doctor</h1>
+        <p class="tagline">Reliability autopilot for your smart home</p>
+        <p class="meta">
+          Home Assistant {{ data.ha_version }} • {{ data.entity_count }} entities
+        </p>
+      </header>
+      <!-- Health summary -->
+      <section class="summary">
+        <div class="summary-cards">
+          <div class="card overall {{ data.health.severity|upper }}">
+            <div class="card-label">Overall</div>
+            <div class="card-value">{{ data.health.severity|upper }}</div>
+          </div>
+          <div class="card unavailable">
+            <div class="card-label">Unavailable</div>
+            <div class="card-value">{{ data.health.unavailable.total_count }}</div>
+          </div>
+          <div class="card critical">
+            <div class="card-label">Critical</div>
+            <div class="card-value">{{ data.health.unavailable.critical_count }}</div>
+          </div>
+          <div class="card updates">
+            <div class="card-label">Updates</div>
+            <div class="card-value">{{ data.health.updates.count }}</div>
+          </div>
+        </div>
+      </section>
+      <!-- Top issue and guidance -->
+      <section class="top-issue">
+        <h2>Top Issue</h2>
+        <div class="issue-card">
+          <div class="issue-headline">
+            {{ data.report.headline }}
+          </div>
+          <p class="issue-description">
+            {{ data.report.description }}
+          </p>
+          {% if data.report.start_here %}
+          <div class="issue-start">
+            <h3>Start here</h3>
+            <ol>
+              {% for step in data.report.start_here %}
+              <li>{{ step }}</li>
+              {% endfor %}
+            </ol>
+          </div>
+          {% endif %}
+          {% if data.report.details %}
+          <div class="issue-details">
+            {{ data.report.details }}
+          </div>
+          {% endif %}
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,63 +1,29 @@
-import os
-from flask import Flask, jsonify, render_template
+"""WSGI entrypoint for HomeOps Doctor.
 
-from app.ha_client import HAClient
-from app.health.analyzer import build_report
+When executed directly, this module will construct the Flask
+application using the factory defined in :mod:`app.__init__` and
+serve it on port 8099.  This port is fixed because Home Assistant
+expects ingress add‑ons to bind to port 8099 inside the container.
 
-def create_app() -> Flask:
-    app = Flask(__name__, template_folder="../templates", static_folder="../static")
+Note that this uses Flask’s built‑in development server.  In
+production environments you may wish to run under a WSGI server
+such as Gunicorn, but for Home Assistant add‑ons the development
+server is sufficient.
+"""
 
-    @app.get("/")
-    def index():
-        report_dict = _get_report()
-        return render_template("index.html", data=report_dict)
+# Import the create_app factory from the package.  Use an absolute
+# import here rather than a relative one so that the module can be
+# executed directly as a script ("python app/main.py").  When run as
+# a script, Python sets __package__ to None and relative imports fail.
+from app import create_app
 
-    @app.get("/api/report")
-    def api_report():
-        return jsonify(_get_report())
 
-    def _get_report():
-        try:
-            ha = HAClient(timeout_s=10)
-            config = ha.config()
-            states = ha.states()
-            report = build_report(ha_version=config.get("version"), states=states)
-            # Convert dataclasses to dict (without extra dependency)
-            return _dataclass_to_dict(report)
-        except Exception as e:
-            return {
-                "ha_version": "unknown",
-                "entity_count": 0,
-                "severity": "unknown",
-                "generated_at_iso": "",
-                "error": str(e),
-                "unavailable": {"total_count": 0, "critical_count": 0, "by_domain": {}, "sample_entities": []},
-                "updates": {"count": 0, "items": []},
-                "issues": [
-                    {
-                        "id": "unknown",
-                        "title": "Health status could not be determined",
-                        "severity": "unknown",
-                        "summary": "HomeOps could not query Home Assistant. Check add-on logs and Supervisor connectivity.",
-                        "start_here": ["Open the HomeOps add-on logs and verify it is running."],
-                        "evidence": {"error": str(e)},
-                    }
-                ],
-            }
+def main() -> None:
+    """Run the Flask application if executed as a script."""
+    app = create_app()
+    # Bind to all addresses on the reserved ingress port (8099)
+    app.run(host="0.0.0.0", port=8099)
 
-    return app
-
-def _dataclass_to_dict(obj):
-    if isinstance(obj, (str, int, float, bool)) or obj is None:
-        return obj
-    if isinstance(obj, list):
-        return [_dataclass_to_dict(x) for x in obj]
-    if isinstance(obj, dict):
-        return {k: _dataclass_to_dict(v) for k, v in obj.items()}
-    if hasattr(obj, "__dict__"):
-        return {k: _dataclass_to_dict(v) for k, v in obj.__dict__.items()}
-    return str(obj)
 
 if __name__ == "__main__":
-    app = create_app()
-    app.run(host="0.0.0.0", port=8099)
+    main()
