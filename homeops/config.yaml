@@ -6,7 +6,7 @@ description: >-
   operational issues, guides you through the first troubleshooting steps,
   and helps you understand the impact of unavailable devices and pending
   updates.
-version: "0.0.5"
+version: "5.0.0"
 startup: services
 ingress: true
 ingress_port: 8099
