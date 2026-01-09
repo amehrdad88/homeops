@@ -1,9 +1,18 @@
 name: HomeOps
 slug: homeops
+description: HomeOps Doctor – a premium, read-only reliability dashboard for Home Assistant
 version: "1.0.0"
-description: HomeOps Doctor
+
+arch:
+  - amd64
+  - aarch64
+  - armv7
+  - armhf
+  - i386
+
 ingress: true
 homeassistant_api: true
+
 panel_title: HomeOps
 panel_icon: mdi:shield-check
 panel_admin: false
