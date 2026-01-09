@@ -1,71 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HomeOps Doctor</title>
-    <!-- Link to the bundled stylesheet.  Using url_for ensures the correct
-         static path is generated when the app is running under Home
-         Assistant's ingress proxy. -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
-  </head>
-  <body>
-    <main class="container">
-      <header class="hero">
-        <h1 class="brand">HomeOps Doctor</h1>
-        <p class="tagline">Reliability autopilot for your smart home</p>
-        <p class="meta">
-          Home Assistant {{ data.ha_version }} • {{ data.entity_count }} entities
-        </p>
-      </header>
-      <!-- Health summary -->
-      <section class="summary">
-        <div class="summary-cards">
-          <div class="card overall {{ data.health.severity|upper }}">
-            <div class="card-label">Overall</div>
-            <div class="card-value">{{ data.health.severity|upper }}</div>
-          </div>
-          <div class="card unavailable">
-            <div class="card-label">Unavailable</div>
-            <div class="card-value">{{ data.health.unavailable.total_count }}</div>
-          </div>
-          <div class="card critical">
-            <div class="card-label">Critical</div>
-            <div class="card-value">{{ data.health.unavailable.critical_count }}</div>
-          </div>
-          <div class="card updates">
-            <div class="card-label">Updates</div>
-            <div class="card-value">{{ data.health.updates.count }}</div>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HomeOps Doctor</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+  <div class="shell">
+    <header class="hero">
+      <div class="hero-left">
+        <div class="brand-row">
+          <div class="mark"></div>
+          <div>
+            <div class="brand">HomeOps</div>
+            <div class="subbrand">Doctor</div>
           </div>
         </div>
-      </section>
-      <!-- Top issue and guidance -->
-      <section class="top-issue">
-        <h2>Top Issue</h2>
-        <div class="issue-card">
-          <div class="issue-headline">
-            {{ data.report.headline }}
-          </div>
-          <p class="issue-description">
-            {{ data.report.description }}
-          </p>
-          {% if data.report.start_here %}
-          <div class="issue-start">
-            <h3>Start here</h3>
-            <ol>
-              {% for step in data.report.start_here %}
+        <div class="headline {{ data.report.severity|upper }}">
+          {{ data.report.headline }}
+        </div>
+        <div class="desc">
+          {{ data.report.description }}
+        </div>
+        {% if data.report.start_here %}
+        <div class="start">
+          <div class="start-title">Start here</div>
+          <ol>
+            {% for step in data.report.start_here %}
               <li>{{ step }}</li>
-              {% endfor %}
-            </ol>
-          </div>
-          {% endif %}
-          {% if data.report.details %}
-          <div class="issue-details">
-            {{ data.report.details }}
-          </div>
-          {% endif %}
+            {% endfor %}
+          </ol>
         </div>
-      </section>
-    </main>
-  </body>
+        {% endif %}
+      </div>
+
+      <div class="hero-right">
+        <div class="meta">
+          <div class="meta-row">
+            <span class="dot"></span>
+            <span>Home Assistant</span>
+            <span class="mono">{{ data.ha_version }}</span>
+          </div>
+          <div class="meta-row">
+            <span class="dot"></span>
+            <span>Entities</span>
+            <span class="mono">{{ data.entity_count }}</span>
+          </div>
+        </div>
+
+        <div class="cards">
+          <div class="card {{ data.health.severity|upper }}">
+            <div class="k">Overall</div>
+            <div class="v">{{ data.health.severity|upper }}</div>
+          </div>
+          <div class="card">
+            <div class="k">Unavailable</div>
+            <div class="v mono">{{ data.health.unavailable.total_count }}</div>
+          </div>
+          <div class="card">
+            <div class="k">Core unavailable</div>
+            <div class="v mono">{{ data.health.unavailable.critical_count }}</div>
+          </div>
+          <div class="card">
+            <div class="k">Updates</div>
+            <div class="v mono">{{ data.health.updates.count }}</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="details">
+      <details>
+        <summary>Evidence</summary>
+        <div class="evidence">
+          <div class="e-title">Unavailable by domain</div>
+          <div class="grid">
+            {% for domain, count in data.health.unavailable.by_domain.items() %}
+              <div class="row">
+                <div class="mono">{{ domain }}</div>
+                <div class="mono">{{ count }}</div>
+              </div>
+            {% endfor %}
+          </div>
+          <div class="links">
+            <a href="/api/report" target="_blank">Open raw report JSON</a>
+          </div>
+        </div>
+      </details>
+    </section>
+  </div>
+</body>
 </html>

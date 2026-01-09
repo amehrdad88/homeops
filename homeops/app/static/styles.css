@@ -1,169 +1,149 @@
-/*
- * HomeOps Doctor Stylesheet
- *
- * This CSS defines a calm, premium design inspired by best‑in‑class apps.
- * The focus is on clarity, hierarchy and delight. Spacing, typography
- * and colour accents guide the user to the most important information.
- */
+:root{
+  --bg:#0b0f17;
+  --panel:#0f1523;
+  --panel2:#0c1220;
+  --stroke:rgba(255,255,255,.08);
+  --text:rgba(255,255,255,.92);
+  --muted:rgba(255,255,255,.62);
+  --muted2:rgba(255,255,255,.45);
+  --shadow:0 20px 60px rgba(0,0,0,.45);
 
-/* Base typography and colours */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  background: #f1f4f8;
-  color: #1c2533;
-  line-height: 1.5;
+  --crit:#ff4d6d;
+  --warn:#ffb020;
+  --ok:#2de2a6;
+  --unk:#8aa0b8;
 }
 
-/* Container to centre the content and set max width */
-.container {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:radial-gradient(1200px 600px at 25% -10%, rgba(45,226,166,.18), transparent 60%),
+             radial-gradient(900px 500px at 90% 10%, rgba(255,77,109,.18), transparent 55%),
+             var(--bg);
+  color:var(--text);
 }
 
-/* Hero / header section */
-.hero {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-.hero .brand {
-  margin: 0;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1c2533;
-}
-.hero .tagline {
-  margin: 0.25rem 0 0;
-  font-size: 1rem;
-  color: #58637a;
-}
-.hero .meta {
-  margin-top: 0.5rem;
-  font-size: 0.8rem;
-  color: #7a8ba0;
+.shell{
+  max-width: 1100px;
+  margin: 28px auto 60px;
+  padding: 0 18px;
 }
 
-/* Section headings */
-h2 {
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #1c2533;
+.hero{
+  display:flex;
+  gap:18px;
+  align-items:stretch;
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  border:1px solid var(--stroke);
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: var(--shadow);
 }
 
-/* Summary cards layout */
-.summary-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1rem;
+.hero-left{flex: 1.3; min-width: 340px;}
+.hero-right{flex: 1; min-width: 320px; display:flex; flex-direction:column; gap:14px;}
+
+.brand-row{display:flex; align-items:center; gap:12px; margin-bottom:14px;}
+.mark{
+  width:34px; height:34px; border-radius:12px;
+  background:linear-gradient(135deg, rgba(45,226,166,.8), rgba(255,77,109,.8));
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+.brand{font-size:15px; letter-spacing:.4px; font-weight:700;}
+.subbrand{font-size:12px; color:var(--muted); margin-top:1px;}
+
+.headline{
+  font-size: 30px;
+  line-height: 1.12;
+  font-weight: 800;
+  margin: 6px 0 10px;
+}
+.headline.CRITICAL{color:var(--crit)}
+.headline.WARNING{color:var(--warn)}
+.headline.HEALTHY{color:var(--ok)}
+.headline.UNKNOWN{color:var(--unk)}
+
+.desc{
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+  margin-bottom: 14px;
+  max-width: 60ch;
 }
 
-/* Base card styling */
-.card {
-  position: relative;
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
+.start{
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--stroke);
+  border-radius: 16px;
+  padding: 14px 14px 12px;
 }
-.card-label {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-weight: 600;
-  color: #6d7d8f;
+.start-title{
+  font-size:12px;
+  color: var(--muted2);
+  font-weight:700;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+  margin-bottom:10px;
 }
-.card-value {
-  margin-top: 0.5rem;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1c2533;
-}
+.start ol{margin:0; padding-left: 18px;}
+.start li{margin:8px 0; color:var(--text); font-size:14px; line-height:1.35;}
 
-/* Customise the overall card with severity colours */
-.card.overall.CRITICAL {
-  border-left: 4px solid #b00020;
-  background: #fdecee;
+.meta{
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--stroke);
+  border-radius:16px;
+  padding: 12px 12px;
 }
-.card.overall.WARNING {
-  border-left: 4px solid #e65100;
-  background: #fff4e5;
-}
-.card.overall.HEALTHY {
-  border-left: 4px solid #2e7d32;
-  background: #eaf5ea;
-}
-.card.overall.UNKNOWN {
-  border-left: 4px solid #7a8ba0;
-  background: #f3f3f5;
-}
+.meta-row{display:flex; align-items:center; justify-content:space-between; gap:10px; color:var(--muted); font-size:12px; padding:4px 2px;}
+.dot{width:6px; height:6px; border-radius:3px; background:rgba(255,255,255,.35);}
 
-/* Other metric cards share a neutral highlight */
-.card.unavailable {
-  border-left: 4px solid #7b1fa2;
+.cards{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
-.card.critical {
-  border-left: 4px solid #d32f2f;
+.card{
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--stroke);
+  border-radius: 16px;
+  padding: 12px 12px 10px;
 }
-.card.updates {
-  border-left: 4px solid #0057e7;
-}
+.card.CRITICAL{border-color: rgba(255,77,109,.35)}
+.card.WARNING{border-color: rgba(255,176,32,.35)}
+.card.HEALTHY{border-color: rgba(45,226,166,.35)}
+.k{font-size:12px; color:var(--muted2); font-weight:700; letter-spacing:.3px; margin-bottom:6px;}
+.v{font-size:14px; font-weight:800;}
+.mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;}
 
-/* Top issue section */
-.top-issue {
-  margin-top: 3rem;
+.details{margin-top: 14px;}
+details{
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--stroke);
+  border-radius: 18px;
+  padding: 12px 14px;
 }
-.issue-card {
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
-  padding: 1.5rem;
-  border-left: 4px solid #b00020;
+summary{cursor:pointer; color:var(--muted); font-weight:700; list-style:none;}
+summary::-webkit-details-marker{display:none}
+.evidence{margin-top: 12px;}
+.e-title{color:var(--muted2); font-size:12px; font-weight:700; letter-spacing:.4px; text-transform:uppercase; margin-bottom:10px;}
+.grid{
+  display:grid;
+  grid-template-columns: 1fr 80px;
+  gap: 8px 16px;
+  max-width: 520px;
 }
-.issue-headline {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #b00020;
-  margin: 0 0 0.5rem 0;
-}
-.issue-description {
-  margin: 0 0 1rem 0;
-  color: #444e5c;
-}
-.issue-start h3 {
-  margin: 0 0 0.5rem 0;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #1c2533;
-}
-.issue-start ol {
-  margin: 0;
-  padding-left: 1.5rem;
-  list-style: decimal;
-}
-.issue-start li {
-  margin-bottom: 0.5rem;
-  line-height: 1.4;
-  color: #444e5c;
-}
-.issue-details {
-  margin-top: 1rem;
-  font-size: 0.9rem;
-  color: #5e6c84;
-  line-height: 1.4;
-}
+.row{display:contents}
+.links{margin-top: 12px;}
+a{color:rgba(45,226,166,.85); text-decoration:none}
+a:hover{text-decoration:underline}
 
-/* Responsive tweaks */
-@media (max-width: 480px) {
-  .card-value {
-    font-size: 1.5rem;
-  }
-  .issue-headline {
-    font-size: 1.25rem;
-  }
+@media (max-width: 920px){
+  .hero{flex-direction:column;}
+  .cards{grid-template-columns:1fr 1fr;}
+}
+@media (max-width: 520px){
+  .cards{grid-template-columns:1fr;}
+  .headline{font-size:26px;}
 }
