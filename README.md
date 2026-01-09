@@ -1,15 +1,8 @@
-# HomeOps Doctor (Home Assistant Add-on)
+HomeOps Doctor
+================
 
-HomeOps Doctor is a local-first reliability dashboard for Home Assistant. It surfaces the *one* most important operational issue, explains impact, and gives clear “start here” steps.
+HomeOps Doctor is a Home Assistant add-on that provides a concise, reliable health dashboard for your smart home.  It runs locally alongside Home Assistant, reads the state of your entities and integrations, and surfaces the most important issues you should pay attention to.
 
-This package is structured as a Home Assistant add-on repository:
-- `repository.yaml` at repo root
-- `homeops/` add-on folder (contains `config.yaml`, `Dockerfile`, app code)
+Unlike typical dashboards that overwhelm you with raw numbers and lists, HomeOps Doctor distills your Home Assistant system into a single headline and a clear next step.  It highlights critical unavailable devices, summarizes which domains are affected, and offers a short list of troubleshooting actions so you know where to start.
 
-## Install (Home Assistant OS)
-1. Add repo in Settings → Add-ons → Add-on store → ⋮ → Repositories
-2. Install **HomeOps**
-3. Start, then open the UI from the sidebar
-
-## Notes
-- Read-only by design (no autofix, no AI, no config writes).
+This project is part of an ongoing exploration into building a “reliability autopilot” for Home Assistant.  Future versions may include deeper analysis, historical context, and (optionally) AI‑assisted explanations.  For now, the focus is on trust, clarity, and doing one thing well.
