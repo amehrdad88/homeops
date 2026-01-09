@@ -1,25 +1,9 @@
-name: HomeOps Doctor
+name: HomeOps
 slug: homeops
-description: >-
-  A local-first reliability dashboard for Home Assistant that tells you what’s
-  wrong and what to do next.  HomeOps Doctor surfaces the most important
-  operational issues, guides you through the first troubleshooting steps,
-  and helps you understand the impact of unavailable devices and pending
-  updates.
 version: "1.0.0"
-# The add‑on should start with Home Assistant services. This is the default when omitted,
-# but we include it explicitly for clarity.
-startup: services
-
-# Enable ingress to allow Home Assistant to proxy requests to the add‑on
+description: HomeOps Doctor
 ingress: true
-
-# Panel configuration defines the icon and title in the sidebar
-panel_icon: mdi:shield-check
-panel_title: HomeOps
-
-# Enable access to the Home Assistant REST API via the proxy
 homeassistant_api: true
-
-# Remove unused keys (init, options, schema) that are not required and can
-# cause issues with add‑on validation.
+panel_title: HomeOps
+panel_icon: mdi:shield-check
+panel_admin: false
